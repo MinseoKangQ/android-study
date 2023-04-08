@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">week6-assignment</string>
+    <string name="input_you_name">이름을 입력하세요.</string>
+    <string name="dog">개</string>
+    <string name="cat">고양이</string>
+    <string name="piece_of_star_information">본 별조각 동아리는 한성대학교의 취미봉사 동아리로써 천체 관측 및 스터디를 하는 동아리입니다. 동아리에 구비된 망원경으로 학교 옥상에서 정기적인 천체관측 학교 강의실을 빌려 정기적인 천체 관측 스터 디를 진행합니다. 또한 학기당 1~2회 정도 천문대 견학과 별 관측에 좋은 장소를 찾아 망원경을 들고 가서 별 관측을 진행하고 있습니다.</string>
+    <string name="button">버튼</string>
+</resources>

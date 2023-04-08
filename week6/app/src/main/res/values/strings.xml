@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">week6-assignment</string>
+    <string name="piece_of_star_information">This Star Sculpture Club is a hobby volunteer club of Hansung University that observes and studies astronomical objects. Regular astronomical observation studies are conducted by renting a regular astronomical observation school classroom on the school roof using the telescope provided by the club. In addition, once or twice per semester, we visit the observatory and find a good place for stargazing, carry a telescope and conduct stargazing.</string>
+    <string name="input_you_name">Input you name.</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="button">Button</string>
+</resources>
