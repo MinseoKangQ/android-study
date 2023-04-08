@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">week6-assignment</string>
+    <string name="android_programming">Android Programming</string>
+    <string name="Dog">dog</string>
+    <string name="Cat">cat</string>
+    <string name="button">Button</string>
+</resources>
