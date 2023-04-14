@@ -9,7 +9,7 @@ class MyViewModel(count : Int) : ViewModel() {
     val countLiveData = MutableLiveData<Int>()
 
     init {
-        countLiveData.value = count
+        countLiveData.value = count // 전달받은 인자로 변수 초기화
     }
 
     fun increaseCount() {
@@ -22,7 +22,8 @@ class MyViewModel(count : Int) : ViewModel() {
 
 }
 
-class MyViewModel2Factory(private val count: Int) : ViewModelProvider.Factory {
+// 초기값 받기 위함
+class MyViewModelFactory(private val count: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         return MyViewModel(count) as T
