@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,17 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("userdata", "hello")
             // startActivity(intent) // intent 지정
             activityResult.launch(intent)
+        }
+
+        // 뷰 모엘 객체 가져오기
+        val viewModel = ViewModelProvider(this)[MyViewModel::class.java]
+        viewModel.countLiveData.observe(this) { // it은 변경된 countLiveData를 말함
+            findViewById<TextView>(R.id.textView3).text = "${it}"
+        }
+
+        // 버튼 누르면 증가
+        findViewById<Button>(R.id.button2)?.setOnClickListener {
+            viewModel.increaseCount()
         }
 
     }
