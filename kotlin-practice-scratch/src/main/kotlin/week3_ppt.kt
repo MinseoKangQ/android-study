@@ -45,7 +45,7 @@ fun main () {
     println("Animal: ${a.name}")
     val p = Person("Junyoung", "Heo")
     println("Name: ${p.firstName} ${p.lastName}")
-    p.lastName = "Heo"
+    p.lastName = "heo"
     println("Name: ${p.firstName} ${p.lastName}")
     println()
 
