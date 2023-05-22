@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">week12-assignment</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Appearance Titles -->
+    <string name="appearance_header">Appearance</string>
+    <string name="Name">Name</string>
+    <string name="Size">Size</string>
+    <string name="Italic">Italic</string>
+
+</resources>
