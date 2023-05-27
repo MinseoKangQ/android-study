@@ -1,75 +1,49 @@
-package com.project.week13
+package com.example.servicelab
 
-import android.Manifest.permission.POST_NOTIFICATIONS
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import kotlinx.coroutines.*
 import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import android.os.IBinder
+import android.widget.Button
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
 
     val textView by lazy { findViewById<TextView>(R.id.textView) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 티라미슈 이상이면 동적권한 요청
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestSinglePermission(Manifest.permission.POST_NOTIFICATIONS)
         }
 
-        val button = findViewById<Button>(R.id.button)
-
-        button.setOnClickListener {
-            startCoroutine() // 코루틴 시작
-        }
-
-        val buttonService = findViewById<Button>(R.id.buttonService)
-        buttonService.setOnClickListener {
+        var num = 0
+        val buttonGet = findViewById<Button>(R.id.buttonGet)
+        buttonGet.setOnClickListener {
             val intent = Intent(this, MyService::class.java)
+            if(num == 0)
+                intent.putExtra("init", 0)
+            else {
+                var getNum = intent?.getIntExtra("init", 0)
+                getNum = getNum?.plus(num)
+                intent.putExtra("init", getNum)
+            }
+
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent)
             }
+            textView.text = "${myService?.tickCount}"
         }
 
-        val buttonGetCount = findViewById<Button>(R.id.buttonGetCount)
-        buttonGetCount.setOnClickListener {
-            textView.text = "count: ${myService?.count}"
-        }
-    }
-
-    fun startCoroutine() {
-        val scope = CoroutineScope(Dispatchers.Default) // 코루틴 스코프 만들기
-        scope.launch { // 실행
-            for(i in 1 .. 10) {
-                delay(1000)
-                withContext(Dispatchers.Main) { // UI적 요소는 Main 에서 변경
-                    textView.text = "$i"
-                }
-            }
-        }
-        // 병행 수행
-        scope.launch {
-            delay(500)
-            for(i in 10 .. 20) {
-                delay(1000)
-                withContext(Dispatchers.Main) {
-                    textView.text = "$i"
-                }
-            }
-        }
     }
 
     // 동적 권한 (복붙)
@@ -85,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (shouldShowRequestPermissionRationale(permission)) { // 권한 설명 필수 여부 확인
-        // you should explain the reason why this app needs the permission.
+            // you should explain the reason why this app needs the permission.
             AlertDialog.Builder(this).apply {
                 setTitle("Reason")
                 setMessage(getString(R.string.req_permission_reason, permission))
@@ -93,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 setNegativeButton("Deny") { _, _ -> }
             }.show()
         } else {
-        // should be called in onCreate()
+            // should be called in onCreate()
             requestPermLauncher.launch(permission) // 권한 요청 시작
         }
     }
