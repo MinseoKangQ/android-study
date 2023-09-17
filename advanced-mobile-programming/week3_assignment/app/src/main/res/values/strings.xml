@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">week3_assignment</string>
+    <string name="no_permission">권한이 없습니다.</string>
+    <string name="req_permission_reason">권한이 필요한 이유</string>
+</resources>
