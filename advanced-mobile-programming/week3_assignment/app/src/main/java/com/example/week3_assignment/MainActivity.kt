@@ -9,12 +9,22 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.widget.Button
+import android.widget.EditText
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS
+import android.provider.Settings.EXTRA_APP_PACKAGE
+
 
 class MainActivity : AppCompatActivity() {
+
+    private var count = 0
+    private var myNotificationID = 1
+    private var myNotificationID2 = 2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,17 +34,37 @@ class MainActivity : AppCompatActivity() {
 
         // 채널 만들기
         createdNotificationChannel()
+        createdNotificationChannel2()
 
         // 버튼 누를 때 showNotification 호출
-        val button = findViewById<Button>(R.id.button)
+        val button = findViewById<Button>(R.id.notify1)
         button.setOnClickListener {
+            count++
             showNotification()
+        }
+
+        // EditText
+        val editText = findViewById<EditText>(R.id.editTextNotification)
+
+        // notify2
+        val notify2 = findViewById<Button>(R.id.notify2)
+        notify2.setOnClickListener {
+            val textToShow = editText.text.toString()
+            showNotification2(textToShow)
+        }
+
+        // settings
+        val settings = findViewById<Button>(R.id.settings)
+        settings.setOnClickListener {
+            val intent = Intent(ACTION_APP_NOTIFICATION_SETTINGS)
+            intent.putExtra(EXTRA_APP_PACKAGE, packageName);
+            startActivity(intent)
         }
     }
 
-    // 채널 만들기
+    // 채널 만들기1
     private val channelID = "default"
-    private var myNotificationID = 1
+
     private fun createdNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -48,12 +78,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 단순 알림 생성
+    // 채널 만들기2
+    private val channelID2 = "custom"
+    private fun createdNotificationChannel2() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelID2, "Custom channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.description = "description text of this channel."
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+
+    // 단순 알림 생성1
     private fun showNotification() {
         val builder = NotificationCompat.Builder(this, channelID)
         builder.setSmallIcon(R.mipmap.ic_launcher)
-        builder.setContentTitle("따라하기 실습")
-        builder.setContentText("따라하기 내용")
+        builder.setContentTitle("Notification Lab.")
+        builder.setContentText("Notification # $count")
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notification = builder.build()
@@ -61,6 +107,22 @@ class MainActivity : AppCompatActivity() {
         if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             NotificationManagerCompat.from(this)
                 .notify(myNotificationID, notification) // 아이디 같으면 알림 덮어짐
+        }
+    }
+
+    // 단순 알림 생성2
+    private fun showNotification2(textToShow: String) {
+        val builder = NotificationCompat.Builder(this, channelID2)
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setContentTitle("Notification Lab2.")
+        builder.setContentText(textToShow)
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notification = builder.build()
+
+        if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            NotificationManagerCompat.from(this)
+                .notify(myNotificationID2, notification) // 아이디 같으면 알림 덮어짐
         }
     }
 
