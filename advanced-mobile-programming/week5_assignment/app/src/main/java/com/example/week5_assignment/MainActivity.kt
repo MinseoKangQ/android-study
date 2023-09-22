@@ -62,9 +62,7 @@ class MainActivity : AppCompatActivity() {
                                 resultText.append("${classWithIdAndName.id}(${classWithIdAndName.name}),")
                             }
                         }
-                    } else {
-                        resultText.append("none")
-                    }
+                    } else { }
 
                     val queryResult = findViewById<TextView>(R.id.text_query_student)
                     queryResult.text = resultText
