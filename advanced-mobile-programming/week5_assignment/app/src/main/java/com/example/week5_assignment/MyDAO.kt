@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface MyDao {
+interface MyDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStudent(student : Student)

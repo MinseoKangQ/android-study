@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [Student::class, ClassInfo::class, Enrollment::class], exportSchema = false, version = 1)
 abstract class MyDatabase : RoomDatabase() {
 
-    abstract fun getMyDao() : MyDao
+    abstract fun getMyDao() : MyDAO
 
     companion object {
         fun getDatabase(context: Context) : MyDatabase {
