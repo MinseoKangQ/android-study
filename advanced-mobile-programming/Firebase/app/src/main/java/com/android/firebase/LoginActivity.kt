@@ -17,6 +17,7 @@ import com.google.firebase.auth.auth
 // SIGN UP : 회원가입
 // SIGN IN : 로그인
 // SIGN OUT : 로그아웃
+// Project 보기, 앱 하위의 .gitignore : google-service.json 추가
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
