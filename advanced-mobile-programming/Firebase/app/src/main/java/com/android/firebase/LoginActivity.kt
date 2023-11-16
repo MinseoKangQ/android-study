@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.remoteconfig.remoteConfig
+import com.google.firebase.remoteconfig.remoteConfigSettings
 
 // https://firebase.google.com/docs/auth/android/password-auth?hl=ko 참고
 // Activity 전환 : Intent 사용
@@ -23,6 +25,21 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // Remote Config
+        val remoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 1 // For test purpose only, 3600 seconds for production
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.setDefaultsAsync(R.xml.remote_config)
+
+        val textView = findViewById<TextView>(R.id.textView)
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this) { // it: task
+                val test = remoteConfig.getBoolean("test")
+                textView.text = "${test}"
+            }
 
         // 회원가입
         findViewById<Button>(R.id.signUpBtn)?.setOnClickListener {
