@@ -3,5 +3,7 @@
     <entry>
         <key>test</key>
         <value>false</value>
+        <key>season</key>
+        <value>spring</value>
     </entry>
 </defaultsMap>
